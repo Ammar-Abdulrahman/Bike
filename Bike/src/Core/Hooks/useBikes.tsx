@@ -34,7 +34,7 @@ const useBikes = (
   const getBikesCount = () =>
     useQuery<BikesCount, Error>(
       ["bikes-count", stolenness],
-      () => fetchData<BikesCount>(`/search/count?stolenness=${stolenness}`),
+      () => fetchData<BikesCount>(`/search/count`),
       {
         onError(error: ErrorProps) {
           toast.error(`Error :${error?.response.data.error.message}`, {

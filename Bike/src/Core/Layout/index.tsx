@@ -10,11 +10,8 @@ import {
 } from "@mui/material";
 import { Link, Outlet } from "react-router-dom";
 import ProfileImage from "../Assets/images/profile.jpg";
-//import BikeImage from "../Assets/images/bike.jpg";
 import { teal } from "@mui/material/colors";
 import { GrBike } from "react-icons/gr";
-//import { MdHome } from "react-icons/md";
-//import { MdBikeScooter } from "react-icons/md";
 import { useThemeContext } from "@Context/themeContext";
 import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
@@ -38,7 +35,7 @@ const Layout = () => {
               Home
             </Button>
             <Button color="inherit" component={Link} to={"/bikes"}>
-              Products
+              Statistics
             </Button>
           </Box>
           <Tooltip
