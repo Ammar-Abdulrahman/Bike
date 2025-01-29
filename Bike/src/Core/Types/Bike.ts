@@ -50,6 +50,10 @@ export interface BikeItem {
   components: any[];
 }
 
+export interface BikeItemOne {
+  bike: BikeItem;
+}
+
 export interface BikesCount {
   non: number;
   stolen: number;

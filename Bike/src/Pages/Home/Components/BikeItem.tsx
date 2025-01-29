@@ -10,12 +10,15 @@ import imageNotFound from "@Assets/images/image.png";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 
-const BikeDetail = ({ bike }: { bike: any }) => {
+const BikeDetail = ({ bike, onClick }: { bike: any; onClick?: () => void }) => {
   const theme = useTheme();
   return (
     <>
       <motion.div transition={{ duration: 0.5 }} whileHover={{ scale: 1.1 }}>
-        <Card sx={{ display: "flex", flexDirection: "row", p: 2 }}>
+        <Card
+          onClick={onClick}
+          sx={{ display: "flex", flexDirection: "row", p: 2 }}
+        >
           <Box
             sx={{
               width: 150,

@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { fetchData } from "@Services/api";
-import { Bike, BikesCount } from "@Types/Bike";
+import { Bike, BikeItemOne, BikesCount } from "@Types/Bike";
 import { ErrorProps } from "@Types/ErrorProps";
 import { toast } from "react-toastify";
 
@@ -15,7 +15,6 @@ const useBikes = (
       ["bikes", page, pageSize, stolenness, textSearch],
       () =>
         fetchData<Bike>(
-          //`search?page=${page}&per_page=${pageSize}&stolenness=stolen`
           `search?page=${page}&per_page=${pageSize}&stolenness=${stolenness}&query=${
             textSearch || ""
           }`
@@ -46,12 +45,21 @@ const useBikes = (
       }
     );
 
-  const getBike = (id: number) => fetchData<Bike>(`/bikes/${id}`);
+  const getBike = (id: number) => fetchData<BikeItemOne>(`/bikes/${id}`);
+
+  const getOneBike = (id: number) => {
+    return useQuery({
+      queryKey: ["bike", id],
+      queryFn: () => getBike(id),
+      enabled: !!id, // Ensure it only fetches if id exists
+    });
+  };
 
   return {
     getBikes,
     getBikesCount,
     getBike,
+    getOneBike,
   };
 };
 

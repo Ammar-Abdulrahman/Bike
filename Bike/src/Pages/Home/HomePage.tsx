@@ -1,7 +1,7 @@
 import useBikes from "@Hooks/useBikes";
 import { Box, Grid, TextField, IconButton, MenuItem } from "@mui/material";
 import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import RefreshIcon from "@mui/icons-material/Refresh";
 import HeaderTitle from "@Components/Header/HeaderTitle";
 import PaginationControls from "@Components/Pagination/PaginationControl";
@@ -10,6 +10,7 @@ import BikeCard from "@Pages/Home/Components/BikeItem";
 import { getCountValue } from "@Pages/Home/Helper/index";
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [isRefetching, setIsRefetching] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [page, setPage] = useState(1);
@@ -22,6 +23,10 @@ const HomePage = () => {
   const { data, isLoading, refetch } = getBikes();
   const totalPages = Math.ceil((CountsData?.non || 0) / limit);
   const count = getCountValue(searchParams.get("status"), CountsData);
+
+  const handleBikeClick = (id: number) => {
+    navigate(`/home/${id}`);
+  };
 
   const handleFilterChange = (filterName: string, value: string) => {
     setSearchParams((prev) => {
@@ -85,7 +90,10 @@ const HomePage = () => {
           {data?.bikes && data?.bikes?.length > 0 ? (
             data?.bikes.map((bike) => (
               <Grid item xs={12} key={bike.id}>
-                <BikeCard bike={bike} />
+                <BikeCard
+                  bike={bike}
+                  onClick={() => handleBikeClick(bike.id)}
+                />
               </Grid>
             ))
           ) : (
