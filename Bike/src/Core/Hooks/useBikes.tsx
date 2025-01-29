@@ -1,6 +1,6 @@
 import { useQuery } from "react-query";
 import { fetchData } from "@Services/api";
-import { Bike, BikeItem, BikesCount } from "@Types/Bike";
+import { Bike, BikesCount } from "@Types/Bike";
 import { ErrorProps } from "@Types/ErrorProps";
 import { toast } from "react-toastify";
 

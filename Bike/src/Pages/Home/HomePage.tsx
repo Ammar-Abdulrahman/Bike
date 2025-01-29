@@ -9,7 +9,6 @@ import {
   TextField,
   IconButton,
 } from "@mui/material";
-//import { Bike, BikeItem } from "@Types/Bike";
 import { useState } from "react";
 import imageNotFound from "@Assets/images/image.png";
 import PaginationControls from "@Components/Pagination/PaginationControl";
@@ -24,15 +23,13 @@ const HomePage = () => {
   const [page, setPage] = useState(1);
   const stolenness = searchParams.get("stolenness") || "all";
   const query = searchParams.get("query") || "";
-  // const [page, setPage] = useState(1);
   const limit = 10;
-  const { getBike, getBikes, getBikesCount } = useBikes(
+  const { getBikes, getBikesCount } = useBikes(
     limit,
     page,
     stolenness,
     query
   );
-  //const { getBikes, getBikesCount } = useBikes(pageSize, page, stolenness, query);
   const { data: CountsData, isLoading: countsLoading } = getBikesCount();
   const { data, isLoading, refetch } = getBikes();
   const totalPages = Math.ceil((CountsData?.non || 0) / limit);
@@ -42,7 +39,7 @@ const HomePage = () => {
     setSearchParams((prev) => {
       const updatedParams = new URLSearchParams(prev);
       updatedParams.set(filterName, value);
-      if (filterName === "page") updatedParams.set("page", "1"); // Reset to page 1 on filter change
+      if (filterName === "page") updatedParams.set("page", "1");
       return updatedParams;
     });
   };
@@ -98,71 +95,74 @@ const HomePage = () => {
       ) : (
         <Box sx={{ p: 3 }}>
           <Grid container spacing={3}>
-            {data?.bikes.map((bike) => (
-              <Grid item xs={12} key={bike.id}>
-                <Card sx={{ display: "flex", flexDirection: "row", p: 2 }}>
-                  {/* Bike Image */}
-                  <Box
-                    sx={{
-                      width: 150,
-                      height: 150,
-                      backgroundColor: "#f5f5f5",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    {bike.large_img ? (
-                      <img
-                        src={bike.large_img}
-                        alt={bike.title}
-                        style={{
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    ) : (
-                      <Typography variant="h6" color="textSecondary">
+            { 
+              data?.bikes.length && data.bikes.length > 0 ? (data?.bikes.map((bike) => (
+                <Grid item xs={12} key={bike.id}>
+                  <Card sx={{ display: "flex", flexDirection: "row", p: 2 }}>
+                    {/* Bike Image */}
+                    <Box
+                      sx={{
+                        width: 150,
+                        height: 150,
+                        backgroundColor: "#f5f5f5",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      {bike.large_img ? (
                         <img
-                          src={imageNotFound}
+                          src={bike.large_img}
+                          alt={bike.title}
                           style={{
                             width: "100%",
                             height: "100%",
                             objectFit: "cover",
                           }}
                         />
+                      ) : (
+                        <Typography variant="h6" color="textSecondary">
+                          <img
+                            src={imageNotFound}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Typography>
+                      )}
+                    </Box>
+  
+                    {/* Bike Details */}
+                    <CardContent sx={{ flex: 1, ml: 2 }}>
+                      <Typography variant="h6" sx={{ color: "#1976d2" }}>
+                        {bike.title}
                       </Typography>
-                    )}
-                  </Box>
-
-                  {/* Bike Details */}
-                  <CardContent sx={{ flex: 1, ml: 2 }}>
-                    <Typography variant="h6" sx={{ color: "#1976d2" }}>
-                      {bike.title}
-                    </Typography>
-                    <Typography>
-                      <strong>Serial:</strong> {bike.serial}
-                    </Typography>
-                    <Typography>
-                      <strong>Primary Colors:</strong>{" "}
-                      {bike.frame_colors.join(", ")}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        color: bike.status === "STOLEN" ? "red" : "green",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {bike.status}: {bike.status}
-                    </Typography>
-                    <Typography>
-                      <strong>Location:</strong> {bike.location_found}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Grid>
-            ))}
+                      <Typography>
+                        <strong>Serial:</strong> {bike.serial}
+                      </Typography>
+                      <Typography>
+                        <strong>Primary Colors:</strong>{" "}
+                        {bike.frame_colors.join(", ")}
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontWeight: "bold",
+                        }}
+                      >
+                        Status : <span style={{ color: bike.status === "stolen" ? "red" : "green",}}> {bike.status}</span>
+                      </Typography>
+                      <Typography>
+                        <strong>Location:</strong> {bike.location_found}
+                      </Typography>
+                    </CardContent>
+                  </Card>
+                </Grid>
+              ))) : (<>
+              <Box sx={{display:"flex" , justifyContent:"center" , textAlign:"center"}}> No items to display</Box>
+              </>)
+            }
           </Grid>
           {data?.bikes.length && data.bikes.length > 0 ? (
             <PaginationControls

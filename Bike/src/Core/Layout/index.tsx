@@ -11,7 +11,7 @@ import {
 import { Link, Outlet } from "react-router-dom";
 import ProfileImage from "../Assets/images/profile.jpg";
 //import BikeImage from "../Assets/images/bike.jpg";
-import { teal, blue, orange, deepOrange } from "@mui/material/colors";
+import { teal } from "@mui/material/colors";
 import { GrBike } from "react-icons/gr";
 //import { MdHome } from "react-icons/md";
 //import { MdBikeScooter } from "react-icons/md";
