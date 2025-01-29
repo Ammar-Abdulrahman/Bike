@@ -17,13 +17,9 @@ const HomePage = () => {
   const stolenness = searchParams.get("stolenness") || "all";
   const query = searchParams.get("query") || "";
   const limit = 10;
-
   const { getBikes, getBikesCount } = useBikes(limit, page, stolenness, query);
   const { data: CountsData, isLoading: countsLoading } = getBikesCount();
   const { data, isLoading, refetch } = getBikes();
-
-  console.log(data?.bikes[3]);
-
   const totalPages = Math.ceil((CountsData?.non || 0) / limit);
   const count = getCountValue(searchParams.get("status"), CountsData);
 

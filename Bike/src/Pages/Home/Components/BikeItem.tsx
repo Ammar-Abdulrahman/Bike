@@ -10,7 +10,7 @@ import imageNotFound from "@Assets/images/image.png";
 import { motion } from "framer-motion";
 import { format } from "date-fns";
 
-const BikeCard = ({ bike }: { bike: any }) => {
+const BikeDetail = ({ bike }: { bike: any }) => {
   const theme = useTheme();
   return (
     <>
@@ -53,13 +53,12 @@ const BikeCard = ({ bike }: { bike: any }) => {
               <strong>Primary Colors:</strong> {bike.frame_colors.join(", ")}
             </Typography>
             <Typography style={{ marginTop: "8px" }}>
-              <strong>Location:</strong>{" "}
+              <strong>Location Found:</strong>{" "}
               <span style={{ color: !bike.location_found ? "red" : "" }}>
                 {bike.location_found ? bike.location_found : "Not available"}
               </span>
             </Typography>
           </CardContent>
-
           <CardContent sx={{ flex: 1, ml: 2 }}>
             <Typography sx={{ fontWeight: "bold", marginTop: "8px" }}>
               Status:{" "}
@@ -91,6 +90,12 @@ const BikeCard = ({ bike }: { bike: any }) => {
                 </span>
               </span>
             </Typography>
+            <Typography style={{ marginTop: "8px" }}>
+              <strong>Location Stolen:</strong>{" "}
+              <span style={{ color: !bike.stolen_location ? "red" : "" }}>
+                {bike.stolen_location ? bike.stolen_location : "Not available"}
+              </span>
+            </Typography>
           </CardContent>
         </Card>
       </motion.div>
@@ -98,4 +103,4 @@ const BikeCard = ({ bike }: { bike: any }) => {
   );
 };
 
-export default BikeCard;
+export default BikeDetail;
